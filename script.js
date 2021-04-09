@@ -64,6 +64,8 @@ class Godzilla extends Monster {
 	}
 	dead = () => {
 		this.img = deadZilla
+		cancelAnimationFrame(stopGame)
+		restartGame()
 	}
 }
 class KingKong extends Monster {
@@ -72,6 +74,8 @@ class KingKong extends Monster {
 	}
 	dead = () => {
 		this.img = deadKong
+		cancelAnimationFrame(stopGame)
+		restartGame()
 	}
 }
 
@@ -99,9 +103,7 @@ let kingkong = new KingKong(
 	canvas.height - 350
 );
 
-<<<<<<< HEAD
-let godzilla = new Godzilla(100, 5000, 50, canvas.width - 400, canvas.height - 400, 300, 150, zilla_image)
-=======
+//let godzilla = new Godzilla(100, 5000, 50, canvas.width - 400, canvas.height - 400, 300, 150, zilla_image)
 window.onkeydown = function (e) {
 	console.log(e.key);
 	if (e.key == 'ArrowLeft') {
@@ -126,7 +128,7 @@ window.onkeydown = function (e) {
 		godzilla.health--
 		kingkong.w ++
 		kingkong.h ++
-		// godzilla.bh += 5
+		kingkong.bh --
 		kingkong.y --
 	}
 	if (e.key == ' ' && detectCollision(godzilla, kingkong)) {
@@ -134,12 +136,12 @@ window.onkeydown = function (e) {
 		godzilla.w += 5
 		godzilla.h += 5
 		godzilla.y -= 5
-		// kingkong.bh += 5
+		godzilla.bh -= 5
 	}
 };
-
+let stopGame = null
 function animate() {
-	requestAnimationFrame(animate);
+	stopGame = requestAnimationFrame(animate);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	background.draw();
 	godzilla.draw();
@@ -147,7 +149,6 @@ function animate() {
 	detectCollision(godzilla, kingkong);
 }
 animate();
->>>>>>> 34749f846af63a7288c3eaead67b53c8ac5fb004
 
 function detectCollision (rect1, rect2){
 	if (rect1.x < rect2.x + rect2.w &&

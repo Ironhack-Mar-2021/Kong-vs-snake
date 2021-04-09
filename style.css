@@ -38,6 +38,10 @@ body {
 	cursor: pointer;
 }
 
+#restart {
+	display: none;
+}
+
 #canvas {
 	position: absolute;
 	background: white;
