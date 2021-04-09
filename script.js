@@ -40,8 +40,15 @@ class Monster {
 		this.bh = bh;
 	}
 	draw = () => {
-		if (this.y < this.bh) this.y++;
+		if (this.y < this.bh) this.y+= 3;
 		ctx.drawImage(this.img, this.x, this.y, this.w, this.h);
+		ctx.fillStyle = 'red'
+		ctx.fillRect(this.x, this.y - 50, 200, 25)
+		ctx.fillStyle = 'green'
+		ctx.fillRect(this.x, this.y - 50, Math.max(0, this.health/100 * 200), 25)
+		if (this.health <= 0) {
+
+		}
 	};
 }
 class Godzilla extends Monster {
@@ -64,7 +71,7 @@ let godzilla = new Godzilla(
 	300,
 	150,
 	zilla_image,
-	canvas.height - 385
+	canvas.height - 285
 );
 
 let kingkong = new KingKong(
@@ -76,28 +83,41 @@ let kingkong = new KingKong(
 	300,
 	300,
 	kong_image,
-	canvas.height - 450
+	canvas.height - 350
 );
 
 window.onkeydown = function (e) {
 	console.log(e.key);
 	if (e.key == 'ArrowLeft') {
-		godzilla.x -= 5;
+		godzilla.x -= 15;
 	}
 	if (e.key == 'ArrowRight') {
-		godzilla.x += 5;
+		godzilla.x += 15;
 	}
 	if (e.key == 'ArrowUp') {
-		godzilla.y -= 100;
+		godzilla.y -= 200;
 	}
 	if (e.key == 'a') {
-		kingkong.x -= 5;
+		kingkong.x -= 15;
 	}
 	if (e.key == 'w') {
-		kingkong.y -= 100;
+		kingkong.y -= 200;
 	}
 	if (e.key == 'd') {
-		kingkong.x += 5;
+		kingkong.x += 15;
+	}
+	if (e.key == ' ' && detectCollision(godzilla, kingkong)) {
+		godzilla.health--
+		kingkong.w ++
+		kingkong.h ++
+		godzilla.bh += 5
+		// kingkong.y ++
+	}
+	if (e.key == 'z' && detectCollision(godzilla, kingkong)) {
+		kingkong.health--
+		godzilla.w += 5
+		godzilla.h += 5
+		kingkong.bh += 5
 	}
 };
 
@@ -105,7 +125,21 @@ function animate() {
 	requestAnimationFrame(animate);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	background.draw();
-	godzilla.draw();
-	kingkong.draw();
+	if (godzilla.health > 0) {
+		godzilla.draw();
+	}
+	if (kingkong.health > 0) {
+		kingkong.draw();
+	}
+	detectCollision(godzilla, kingkong);
 }
 animate();
+
+function detectCollision (rect1, rect2){
+	if (rect1.x < rect2.x + rect2.w &&
+	rect1.x + rect1.w > rect2.x &&
+	rect1.y < rect2.y + rect2.h &&
+	rect1.y + rect1.h > rect2.y) {
+		return true
+ 	}
+}
