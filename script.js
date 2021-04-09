@@ -106,18 +106,19 @@ window.onkeydown = function (e) {
 	if (e.key == 'd') {
 		kingkong.x += 15;
 	}
-	if (e.key == ' ' && detectCollision(godzilla, kingkong)) {
+	if (e.key == 'z' && detectCollision(godzilla, kingkong)) {
 		godzilla.health--
 		kingkong.w ++
 		kingkong.h ++
-		godzilla.bh += 5
+		// godzilla.bh += 5
 		// kingkong.y ++
 	}
-	if (e.key == 'z' && detectCollision(godzilla, kingkong)) {
+	if (e.key == ' ' && detectCollision(godzilla, kingkong)) {
 		kingkong.health--
 		godzilla.w += 5
 		godzilla.h += 5
-		kingkong.bh += 5
+
+		// kingkong.bh += 5
 	}
 };
 
