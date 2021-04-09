@@ -3,7 +3,9 @@ body {
 }
 
 .hidden {
-  display: none;
+  /* display: none; */
+  opacity: 0;
+  pointer-events: none;
 }
 
 #contain-body {
@@ -40,4 +42,5 @@ body {
   position: absolute;
   background: white;
   border: solid 2px black;
+  transition: all 1s;
 }
