@@ -99,6 +99,9 @@ let kingkong = new KingKong(
 	canvas.height - 350
 );
 
+<<<<<<< HEAD
+let godzilla = new Godzilla(100, 5000, 50, canvas.width - 400, canvas.height - 400, 300, 150, zilla_image)
+=======
 window.onkeydown = function (e) {
 	console.log(e.key);
 	if (e.key == 'ArrowLeft') {
@@ -144,6 +147,7 @@ function animate() {
 	detectCollision(godzilla, kingkong);
 }
 animate();
+>>>>>>> 34749f846af63a7288c3eaead67b53c8ac5fb004
 
 function detectCollision (rect1, rect2){
 	if (rect1.x < rect2.x + rect2.w &&
