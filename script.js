@@ -3,9 +3,14 @@ let ctx = canvas.getContext('2d');
 let background_image = new Image();
 background_image.src = './images/city-game-background-2d-application-260nw-398557408.png';
 let kong_image = new Image();
-kong_image.src = './images/f48f9b325ccea5585e0a910f5c2a8977-removebg-preview.png';
+kong_image.src = './images/KingKong.png';
 let zilla_image = new Image();
-zilla_image.src = './images/e58753d4724d6e779d7fa07e2f61bb5f-removebg-preview.png';
+zilla_image.src = './images/Zilla.png';
+let deadKong = new Image();
+deadKong.src = './images/KingDead.png'
+let deadZilla = new Image();
+deadZilla.src = './images/deadZilla.png'
+
 
 canvas.width = window.innerWidth - 10;
 canvas.height = window.innerHeight - 10;
@@ -47,18 +52,26 @@ class Monster {
 		ctx.fillStyle = 'green'
 		ctx.fillRect(this.x, this.y - 50, Math.max(0, this.health/100 * 200), 25)
 		if (this.health <= 0) {
-
+			this.dead()
 		}
 	};
+	// dead = () => {
+	// }
 }
 class Godzilla extends Monster {
 	constructor(health, strength, speed, x, y, w, h, img, bh) {
 		super(health, strength, speed, x, y, w, h, img, bh);
 	}
+	dead = () => {
+		this.img = deadZilla
+	}
 }
 class KingKong extends Monster {
 	constructor(health, strength, speed, x, y, w, h, img, bh) {
 		super(health, strength, speed, x, y, w, h, img, bh);
+	}
+	dead = () => {
+		this.img = deadKong
 	}
 }
 
@@ -68,8 +81,8 @@ let godzilla = new Godzilla(
 	50,
 	canvas.width - 400,
 	canvas.height - 385,
-	300,
-	150,
+	500,
+	250,
 	zilla_image,
 	canvas.height - 285
 );
@@ -111,13 +124,13 @@ window.onkeydown = function (e) {
 		kingkong.w ++
 		kingkong.h ++
 		// godzilla.bh += 5
-		// kingkong.y ++
+		kingkong.y --
 	}
 	if (e.key == ' ' && detectCollision(godzilla, kingkong)) {
 		kingkong.health--
 		godzilla.w += 5
 		godzilla.h += 5
-
+		godzilla.y -= 5
 		// kingkong.bh += 5
 	}
 };
@@ -126,12 +139,8 @@ function animate() {
 	requestAnimationFrame(animate);
 	ctx.clearRect(0, 0, canvas.width, canvas.height);
 	background.draw();
-	if (godzilla.health > 0) {
-		godzilla.draw();
-	}
-	if (kingkong.health > 0) {
-		kingkong.draw();
-	}
+	godzilla.draw();
+	kingkong.draw();
 	detectCollision(godzilla, kingkong);
 }
 animate();
