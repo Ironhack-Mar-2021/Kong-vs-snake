@@ -55,7 +55,6 @@ class KingKong extends Monster {
 }
 
 
-
 let godzilla = new Godzilla(100, 5000, 50, canvas.width - 400, canvas.height - 400, 300, 150, zilla_image)
 
 let kingkong = new KingKong(100, 5000, 50, 50, canvas.height - 450, 300, 300, kong_image)
