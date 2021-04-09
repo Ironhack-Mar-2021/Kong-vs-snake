@@ -12,6 +12,9 @@ let deadZilla = new Image();
 deadZilla.src = './images/deadZilla.png'
 let planeImg = new Image();
 planeImg.src = './images/plane.png'
+let peopleImg = new Image();
+peopleImg.src = "./images/people.jpeg"
+let audio = new Audio('./images/Retro Action Video Game.wav');
 
 
 
@@ -89,18 +92,18 @@ class Plane {
         this.h = h
         this.img = img
     }
-        detectCollision = (rect1) =>  {
-            if (rect1.x < this.x + this.w &&
-                rect1.x + rect1.w > this.x &&
-                rect1.y < this.y + this.h &&
-                rect1.y + rect1.h > this.y) {
-                rect1.health = Math.min(100, rect1.health + .5)
-            }
+    detectCollision = (rect1) => {
+        if (rect1.x < this.x + this.w &&
+            rect1.x + rect1.w > this.x &&
+            rect1.y < this.y + this.h &&
+            rect1.y + rect1.h > this.y) {
+            rect1.health = Math.min(100, rect1.health + .5)
         }
-        
+    }
 
 
-    
+
+
 
     draw = () => {
 
@@ -112,12 +115,53 @@ class Plane {
 
 
         }
+    }
+}
 
+class Humans {
+    constructor(img, x, y, w, h) {
+        this.x = x
+        this.y = y;
+        this.w = w;
+        this.h = h;
+        this.img = img;
+        this.dx = 0;
+        this.dy = canvas.height - 200;
+    }
+
+    draw = () => {
+        // if (this.x !== this.dx) {
+        //     this.x--
+        // }
+        // if (this.y !== this.dy) {
+        //     this.y--
+        // }
+        let disX = this.x - this.dx;
+        let disY = this.y - this.dy;
+        let hypo = Math.sqrt(disX * disX + disY * disY)
+        if (disX < 0) {
+            this.x++;
+        } else {
+            this.x--
+        }
+
+        if (disY < 0) {
+            this.y += disX / disY;
+        } else {
+            this.y -= disX / disY;
+        }
+
+        ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
 
     }
 
 
+
+
 }
+
+let humans = new Humans(peopleImg, canvas.width - 30, canvas.height - 30, 100, 100)
+
 let plane = new Plane(
     canvas.width,
     150,
@@ -200,6 +244,7 @@ function animate() {
     detectCollision(godzilla, kingkong);
     plane.detectCollision(godzilla)
     plane.detectCollision(kingkong)
+    humans.draw();
 
 }
 animate();
