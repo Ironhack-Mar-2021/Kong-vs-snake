@@ -120,36 +120,27 @@ class Plane {
 
 class Humans {
     constructor(img, x, y, w, h) {
-        this.x = x
+        this.x = 0
         this.y = y;
         this.w = w;
         this.h = h;
         this.img = img;
-        this.dx = 0;
+        this.sx = x;
+        this.sy = y;
+        this.dx = canvas.width;
         this.dy = canvas.height - 200;
+        this.direction = 1
     }
 
     draw = () => {
-        // if (this.x !== this.dx) {
-        //     this.x--
-        // }
-        // if (this.y !== this.dy) {
-        //     this.y--
-        // }
-        let disX = this.x - this.dx;
-        let disY = this.y - this.dy;
-        let hypo = Math.sqrt(disX * disX + disY * disY)
-        if (disX < 0) {
-            this.x++;
-        } else {
-            this.x--
-        }
+        if (this.x > canvas.width) {
+            this.direction = -1
 
-        if (disY < 0) {
-            this.y += disX / disY;
-        } else {
-            this.y -= disX / disY;
         }
+        if (this.x < 0) {
+            this.direction = 1
+        }
+        this.x += this.direction
 
         ctx.drawImage(this.img, this.x, this.y, this.w, this.h)
 
@@ -160,7 +151,7 @@ class Humans {
 
 }
 
-let humans = new Humans(peopleImg, canvas.width - 30, canvas.height - 30, 100, 100)
+let humans = new Humans(peopleImg, canvas.width, canvas.height - 130, 100, 100)
 
 let plane = new Plane(
     canvas.width,
