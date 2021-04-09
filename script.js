@@ -10,6 +10,9 @@ let deadKong = new Image();
 deadKong.src = './images/KingDead.png'
 let deadZilla = new Image();
 deadZilla.src = './images/deadZilla.png'
+let planeImg = new Image();
+planeImg.src = './images/plane.png'
+
 
 
 canvas.width = window.innerWidth - 10;
@@ -78,6 +81,42 @@ class KingKong extends Monster {
 		restartGame()
 	}
 }
+class Plane {
+constructor( x, y, w, h, img){
+this.x = x
+this.y =y
+this.w = w
+this.h = h
+this.img = img
+
+
+}
+
+draw= () =>{
+
+this.x -=5
+ctx.drawImage(this.img, this.x, this.y, this.w, this.h )
+if (this.x <-50){
+	this.x = canvas.width + 50
+
+
+
+}
+
+
+}
+
+
+}
+let plane = new Plane (
+	canvas.width,
+	150,
+	80,
+	80,
+	planeImg
+
+
+)
 
 let godzilla = new Godzilla(
 	100,
@@ -146,6 +185,7 @@ function animate() {
 	background.draw();
 	godzilla.draw();
 	kingkong.draw();
+	plane.draw();
 	detectCollision(godzilla, kingkong);
 }
 animate();
